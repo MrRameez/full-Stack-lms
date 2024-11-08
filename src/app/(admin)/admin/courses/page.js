@@ -11,7 +11,6 @@ export default function Courses() {
                 <Button>Add Courses</Button>
             </div>
             <CourseTable />
-
         </div>
     )
 }
