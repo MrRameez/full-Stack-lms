@@ -10,7 +10,7 @@ export default function Courses() {
                 <h1 className="text-4xl font-bold text-center">Courses</h1>
                 <Button>Add Courses</Button>
             </div>
-            <CourseTable />
+            <CourseTable/>
         </div>
     )
 }
