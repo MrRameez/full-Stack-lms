@@ -47,9 +47,7 @@ export function CourseDailog() {
                 <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>
                         <DialogTitle>Add Course</DialogTitle>
-                        {/* <DialogDescription>
-                You can add course here.
-            </DialogDescription> */}
+                        
                     </DialogHeader>
                     <CourseForm />
                 </DialogContent>
@@ -85,30 +83,30 @@ function CourseForm({ className }) {
         <form className={cn("grid items-start gap-4", className)}>
             <div className="grid gap-2">
                 <Label htmlFor="course">Course</Label>
-                <Input type="text" id="course" defaultValue="" />
+                <Input required type="text" id="course" defaultValue="" />
             </div>
             <div className="grid gap-2">
                 <Label htmlFor="duration">Duration</Label>
-                <Input id="duration" defaultValue="" />
+                <Input required id="duration" defaultValue="" />
             </div>
             <div className="grid gap-2">
                 <Label htmlFor="description">Description</Label>
-                <Input id="description" defaultValue="" />
+                <Input required id="description" defaultValue="" />
             </div>
             <div className="grid gap-2">
                 <Label htmlFor="">Status</Label>
-                <Select>
+                <Select required>
                     <SelectTrigger >
                         <SelectValue placeholder="Active - Not-Active" />
                     </SelectTrigger>
                     <SelectContent>
                         <SelectItem value="active">Active</SelectItem>
-                        <SelectItem value="not-active">Not-</SelectItem>
+                        <SelectItem value="not-active">Not-Active</SelectItem>
                     </SelectContent>
                 </Select>
 
             </div>
-            <Button type="submit">Save changes</Button>
+            <Button type="submit">Add Course</Button>
         </form>
     )
 }
