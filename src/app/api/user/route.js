@@ -1,14 +1,22 @@
 import { connectDB } from "@/lib/dbConnect";
-import { UsersModal } from "@/lib/modals/UserModal";
+import { UserModal } from "@/lib/modals/UserModal";
 
 export async function POST(request) {
-    await connectDB();
+    await connectDB()
     const obj = await request.json();
     console.log("object => ", obj);
 
     // check this user exist
-    const user = await UsersModal({ email: obj.email });
-    console.log("User =>", user);
+    let user = await UserModal.findOne({email: obj.email });
+
+    // if (user) {
+    //     return Response.json(
+    //         { error: true, msg: "User Already Exist" },
+    //         { status: 403}
+    //     )
+    //  }
+    console.log( "user =>",user);
+    
     
     return Response.json('User Post Request');
 }
