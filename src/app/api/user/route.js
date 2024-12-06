@@ -14,12 +14,9 @@ export async function POST(request) {
       { status: 403 }
     );
 
-<<<<<<< HEAD
-=======
     // console.log("user =>", user);
     
 
->>>>>>> f9eac8152ea448c96b0551771962f9dba65451a5
   const saltRounds = 10;
   const hashedPassword = await bcrypt.hash(obj.password, saltRounds);
   obj.password = hashedPassword;

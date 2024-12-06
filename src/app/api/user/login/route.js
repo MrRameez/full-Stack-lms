@@ -1,34 +1,49 @@
 import { connectDB } from "@/lib/dbConnect";
 import { UserModal } from "@/lib/modals/UserModal";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import { Award } from "lucide-react";
+import { NextResponse } from "next/server";
 
 export async function POST(request) {
-    await connectDB();
-    const obj = await request.json();
-    console.log("Login obj =>", obj);
+    try {
+        // Connect to the database
+        await connectDB();
 
-    const user = await UserModal.findOne({ email: obj.email })
-    if (!user)
-        return (
-            { error: true, msg: "User Not Found" },
-            {
-                status: 400,
-            }
-        )
+        // Parse the request body
+        const obj = await request.json();
+        console.log("Login obj =>", obj);
 
-    const isPasswordMatch = await bcrypt.compare(obj.password, user.password)
-    if (!isPasswordMatch)
-        return (
-            { error: true, msg: "User Not Found" },
-            {
-                status: 400,
-            }
-        )
+        // Check if user exists
+        const user = await UserModal.findOne({ email: obj.email });
+        if (!user) {
+            return NextResponse.json(
+                { error: true, msg: "User Not Found" },
+                { status: 404 }
+            );
+        }
 
-    console.log("isPasswordMatch =>", isPasswordMatch);
+        // Verify the password
+        const isPasswordMatch = await bcrypt.compare(obj.password, user.password);
+        if (!isPasswordMatch) {
+            return NextResponse.json(
+                { error: true, msg: "Password is not valid" },
+                { status: 401 }
+            );
+        }
 
-    //check this user exist
-    return Response.json("workink on login")
+        console.log("isPasswordMatch =>", isPasswordMatch);
+
+        // Successful login response
+        return NextResponse.json(
+            { success: true, msg: "Login successful" },
+            { status: 200 }
+        );
+    } catch (error) {
+        console.error("Error in POST handler:", error);
+
+        // Return an internal server error response
+        return NextResponse.json(
+            { error: true, msg: "Internal Server Error" },
+            { status: 500 }
+        );
+    }
 }
